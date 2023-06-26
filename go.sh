@@ -40,4 +40,5 @@ python3      main.py     $be      $en     G-35    @InugamiKorone         >  $be-
 
 dirname=$be-$en
 echo "ls $dirname/*/*_speed_RANK.tsv > $dirname/RANK_list.tsv" > ana.sh
+echo "mkdir -p $dirname/videos" >> ana.sh
 echo "python3  analysis_RANK.py  20230617-20230623/RANK_list.tsv" >> ana.sh

@@ -1,5 +1,6 @@
 from get_chat_speed import dataout
 import sys
+from download import download
 
 
 def analysis(RANK_file_list, fname):
@@ -20,6 +21,7 @@ def analysis(RANK_file_list, fname):
         sline = f"{line[0]}\t{line[1]}\t{line[2]}\t{line[3]}\t{line[4]}\t{line[5]}"+"\n"
         outdatas.append(sline)
     dataout(fname, outdatas)
+    return sorted_datas
 
 
 def get_url_by_fname(fname):
@@ -31,7 +33,13 @@ def get_url_by_fname(fname):
 if __name__ == '__main__':
     listfname = sys.argv[1]
     ofname = listfname.replace('_list', '')
-    with open(listfname, 'r', encoding='utf-16') as f:
+    with open(listfname, 'r') as f:
         fnames = f.readlines()
     # print(fnames)
-    analysis(fnames, ofname)
+    ranklist = analysis(fnames, ofname)
+
+    dirname = listfname.replace('/RANK_list.tsv', '/videos/')
+    for i in range(min(len(ranklist), 10)):
+        dir = f"{dirname}{i+1}-"
+        URL = ranklist[i][0]
+        download(URL, dir)
