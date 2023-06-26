@@ -40,6 +40,9 @@ if __name__ == '__main__':
 
     dirname = listfname.replace('/RANK_list.tsv', '/videos/')
     for i in range(min(len(ranklist), 10)):
+        if len(ranklist[i]) < 3:
+            continue
         dir = f"{dirname}{i+1}-"
         URL = ranklist[i][0]
-        download(URL, dir)
+        TIME = int(ranklist[i][1])
+        download(URL, dir, TIME-60, TIME+60)
