@@ -1,12 +1,11 @@
-import pytchat
 from collections import defaultdict
+from liver_data_class import Liver_data
 
 
-def get_chat_speed_by_file(fname):
+def get_chat_speed(liver: Liver_data):
     print('Anarysis Chat Speed')
     timed = defaultdict(int)
-    ofname = fname.replace('.tsv', '_speed.tsv')
-    sprankname = fname.replace('.tsv', '_speed_RANK.tsv')
+    fname = liver.chat_data_file[liver.pos]
     with open(fname, 'r', encoding='utf-16') as f:
         lines = f.readlines()
     if len(lines) == 0:
@@ -22,9 +21,8 @@ def get_chat_speed_by_file(fname):
         # print(lc[0], int2time(timekey), timekey)
     outdata = chat_speed_ave(mintime, maxtime, timed, 10)
     ranklist = analysis_speed(outdata)
-    dataout(ofname, outdata)
-    dataout(sprankname, ranklist)
-    return sprankname
+    dataout(liver.chat_speed_file[liver.pos], outdata)
+    dataout(liver.chat_speed_rank_file[liver.pos], ranklist)
 
 
 def time2int(str):
@@ -124,19 +122,6 @@ def dataout(fname, datalist):
 #     with open(fname, 'w', encoding='utf-16', newline='\n') as f:
 #         f.writelines(txtout)
 #     print('Create chat speed file  : ', fname)
-
-
-def get_chat_speed(video_id):
-    txt_in = []
-    livechat = pytchat.LiveChat(video_id=video_id, processor=pytchat.SpeedCalculator(capacity=20))
-    # livechat = pytchat.create(video_id=video_id)
-    while livechat.is_alive():
-        chatspeed = livechat.get()
-        # print(type(chatspeed))
-        print(chatspeed)
-        # time.sleep(3)
-    # with open(outdir + video_id + '_chatdata.csv', 'w', encoding='utf-16', newline='\n') as f:
-    #     f.writelines(txt_in)
 
 
 if __name__ == '__main__':

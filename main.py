@@ -1,22 +1,18 @@
 from get_chat_data_by_pytchat import get_chat_data
-from get_chat_speed import get_chat_speed_by_file
-from extract_video_id import extract_video_id
-from getURL import getURL
-from make import make
-from analysis_RANK import analysis
-import os
+from get_chat_speed import get_chat_speed
 import sys
-import threading
+import io
+from liver_data_class import Liver_data
+from scrape_stream_url import youtube_scrape
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
-speed_RANK_files = []
-
-
-def getdata(video_id, outdir):
+def getdata(liver: Liver_data):
     # video_id, video_data = extract_video_id(url)
-    fname = get_chat_data(video_id, outdir)
-    RANK_fname = get_chat_speed_by_file(fname)
-    speed_RANK_files.append(RANK_fname)
+    get_chat_data(liver)
+    get_chat_speed(liver)
 
 
 def isGet(datestr, sdate, edate):
@@ -25,24 +21,19 @@ def isGet(datestr, sdate, edate):
     return True if (sdate <= date and date <= edate) else False
 
 
-def main(root, gen, c_name, stime, etime):
-    print('From '+str(stime)+' to '+str(etime))
-    dirname = root+'/'+gen+'_'+c_name
-    with open(dirname+'/URL_list.tsv', 'r', encoding='utf-16') as f:
-        lines = f.readlines()
-    for line in lines:
-        if len(line) < 3:
-            continue
+def main(liver: Liver_data):
+    print('From '+str(liver.start_date)+' to '+str(liver.end_date))
+    youtube_scrape(liver)
+    for i in range(liver.stream_num):
         print('------------------------------------------------')
-        print('myID          : ', gen)
-        print('Channel Name  : ', c_name)
-        URL = line.strip().split()[0]
-        video_id, video_date = extract_video_id(URL)
-        if isGet(video_date, stime, etime):
-            print('GET DATA !!!')
-            getdata(video_id, dirname+'/')
+        print('Stream URL    : ', liver.stream_url[i])
+        print('Stream Date   : ', liver.stream_date[i])
+        print('Stream Title  : ', liver.stream_title[i])
+        print('Stream ID     : ', liver.stream_id[i])
+        liver.pos = i
+        getdata(liver)
         print()
-    
+    liver.save_data()
 
 
 if __name__ == '__main__':
@@ -50,7 +41,6 @@ if __name__ == '__main__':
     en = sys.argv[2]
     gen = sys.argv[3]
     c_name = sys.argv[4]
-    root = be+"-"+en
-    main(root, gen, c_name, int(be), int(en))
+    liver = Liver_data(c_name, gen, be, en)
+    main(liver)
     print("FINISHED !!!!!!!!")
-    print()
