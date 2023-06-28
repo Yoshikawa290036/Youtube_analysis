@@ -3,14 +3,12 @@ import sys
 from download import download
 
 
-def analysis(RANK_file_list, fname):
+def analysis(RANK_file_list, URL_list, stream_num, fname):
     datas = []
-    for rank_file in RANK_file_list:
-        # rank_file = rank_file.strip()
-        print(rank_file)
-        # if len(rank_file) < 3:
-        #     continue
-        url = get_url_by_fname(rank_file)
+    for i in range(stream_num):
+        rank_file = RANK_file_list[i]
+        url = URL_list[i]
+        print(rank_file, url)
         with open(rank_file, 'r', encoding='utf-16') as f:
             line = f.readline()
         if len(line) < 2:

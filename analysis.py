@@ -53,7 +53,7 @@ def read_Liver_data_class(be, en, gens, c_names):
 
 
 def make_ranking(livers: Conbined_Liver_data):
-    ranklist = analysis(livers.chat_speed_rank_files, livers.ranking_file_name)
+    ranklist = analysis(livers.chat_speed_rank_files, livers.urls, livers.stream_num, livers.ranking_file_name)
     for i in range(min(len(ranklist), 10)):
         head = os.path.join(livers.video_directory, f"{i+1}-")
         URL = ranklist[i][0]
