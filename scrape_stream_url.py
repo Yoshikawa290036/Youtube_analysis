@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from yt_dlp import YoutubeDL
 import os
+import time
 
 def get_stream_date(url):
     with YoutubeDL({'ignoreerrors': True}) as ydl:
@@ -20,6 +21,7 @@ def get_page_source(Liver_data):
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     driver = webdriver.Chrome(options=options)
     driver.get(Liver_data.channel_streams_url)
+    time.sleep(3)
     return driver.page_source
 
 
