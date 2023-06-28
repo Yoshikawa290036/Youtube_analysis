@@ -11,6 +11,7 @@ def get_stream_date(url):
     with YoutubeDL({'ignoreerrors': True}) as ydl:
         info_dict = ydl.extract_info(url, download=False)
         date = info_dict.get("upload_date")
+        print("Upload Date : ", date)
         return int(date)
 
 
@@ -46,6 +47,7 @@ def parse_video_title_and_url(Liver_data : Liver_data, current_html):
             stream_id = url.replace("/watch?v=", "")
             date = get_stream_date(stream_url)
             if Liver_data.start_date <= date and date <= Liver_data.end_date:
+                print("Matched to the time period !!!")
                 Liver_data.stream_url.append(stream_url)
                 Liver_data.stream_id.append(stream_id)
                 Liver_data.stream_title.append(title)
@@ -55,12 +57,16 @@ def parse_video_title_and_url(Liver_data : Liver_data, current_html):
                 Liver_data.chat_speed_file.append(f"{outfile}_speed.tsv")
                 Liver_data.chat_speed_rank_file.append(f"{outfile}_speed_RANK.tsv")
                 Liver_data.stream_num += 1
+            print()
 
 
 def youtube_scrape(Liver_data: Liver_data):
+    print("Start scraping stream URL")
     html = get_page_source(Liver_data)
     parse_video_title_and_url(Liver_data, html)
     Liver_data.output_url_list()
+    print("Finished scraping stream URL")
+    print()
 
 
 if __name__ == '__main__':

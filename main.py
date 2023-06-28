@@ -2,11 +2,16 @@ from get_chat_data_by_pytchat import get_chat_data
 from get_chat_speed import get_chat_speed
 import sys
 import io
+import os
 from liver_data_class import Liver_data
 from scrape_stream_url import youtube_scrape
 
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
+sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', buffering=1)
+sys.stdin = os.fdopen(sys.stdin.fileno(), 'r', buffering=1)
 
 
 def getdata(liver: Liver_data):
@@ -24,8 +29,10 @@ def isGet(datestr, sdate, edate):
 def main(liver: Liver_data):
     print('From '+str(liver.start_date)+' to '+str(liver.end_date))
     youtube_scrape(liver)
+    print("Start getting chat data")
     for i in range(liver.stream_num):
         print('------------------------------------------------')
+        print(f'  {i+1} / {liver.stream_num}')
         print('Stream URL    : ', liver.stream_url[i])
         print('Stream Date   : ', liver.stream_date[i])
         print('Stream Title  : ', liver.stream_title[i])
