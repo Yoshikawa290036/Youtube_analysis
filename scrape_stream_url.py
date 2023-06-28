@@ -2,6 +2,7 @@
 from liver_data_class import Liver_data
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from yt_dlp import YoutubeDL
 import os
 
@@ -13,7 +14,11 @@ def get_stream_date(url):
 
 
 def get_page_source(Liver_data):
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument('--disable-logging')
+    options.add_argument('--log-level=3')
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver = webdriver.Chrome(options=options)
     driver.get(Liver_data.channel_streams_url)
     return driver.page_source
 
