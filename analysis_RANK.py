@@ -6,13 +6,15 @@ from download import download
 def analysis(RANK_file_list, fname):
     datas = []
     for rank_file in RANK_file_list:
-        rank_file = rank_file.strip()
+        # rank_file = rank_file.strip()
         print(rank_file)
-        if len(rank_file) < 3:
-            continue
+        # if len(rank_file) < 3:
+        #     continue
         url = get_url_by_fname(rank_file)
         with open(rank_file, 'r', encoding='utf-16') as f:
             line = f.readline()
+        if len(line) < 2:
+            continue
         lc = line.strip().split()
         datas.append([url, lc[0], lc[1], lc[2], float(lc[3]), rank_file])
     sorted_datas = sorted(datas, key=lambda x: x[4], reverse=True)

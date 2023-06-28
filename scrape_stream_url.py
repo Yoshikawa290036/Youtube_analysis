@@ -50,7 +50,7 @@ def parse_video_title_and_url(Liver_data : Liver_data, current_html):
                 Liver_data.stream_num += 1
 
 
-def youtube_scrape(Liver_data):
+def youtube_scrape(Liver_data: Liver_data):
     html = get_page_source(Liver_data)
     parse_video_title_and_url(Liver_data, html)
     Liver_data.output_url_list()

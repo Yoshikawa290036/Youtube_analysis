@@ -9,6 +9,8 @@ def get_chat_speed(liver: Liver_data):
     with open(fname, 'r', encoding='utf-16') as f:
         lines = f.readlines()
     if len(lines) == 0:
+        dataout(liver.chat_speed_file[liver.pos], [' '])
+        dataout(liver.chat_speed_rank_file[liver.pos], [' '])
         return 'None'
     mintime, maxtime = get_min_max_time(lines)
     # print(mintime, maxtime)
