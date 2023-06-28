@@ -3,10 +3,11 @@ import sys
 from download import download
 
 
-def analysis(RANK_file_list, URL_list, stream_num, fname):
+def analysis(RANK_file_list, URL_list, titles, stream_num, fname):
     datas = []
     for i in range(stream_num):
         rank_file = RANK_file_list[i]
+        title = titles[i]
         url = URL_list[i]
         print(rank_file, url)
         with open(rank_file, 'r', encoding='utf-16') as f:
@@ -14,11 +15,11 @@ def analysis(RANK_file_list, URL_list, stream_num, fname):
         if len(line) < 2:
             continue
         lc = line.strip().split()
-        datas.append([url, lc[0], lc[1], lc[2], float(lc[3]), rank_file])
+        datas.append([url, lc[0], lc[1], lc[2], float(lc[3]), title, rank_file])
     sorted_datas = sorted(datas, key=lambda x: x[4], reverse=True)
     outdatas = []
     for line in sorted_datas:
-        sline = f"{line[0]}\t{line[1]}\t{line[2]}\t{line[3]}\t{line[4]}\t{line[5]}"+"\n"
+        sline = f"{line[0]}\t{line[1]}\t{line[2]}\t{line[3]}\t{line[4]}\t{line[5]}\t{line[6]}"+"\n"
         outdatas.append(sline)
     dataout(fname, outdatas)
     return sorted_datas
