@@ -1,9 +1,11 @@
 from get_chat_speed import dataout
 import sys
 from download import download
+from liver_data_class import Conbined_Liver_data
+import os
 
 
-def analysis(RANK_file_list, URL_list, titles, stream_num, fname):
+def analysis_RANK(RANK_file_list, URL_list, titles, stream_num, fname):
     datas = []
     for i in range(stream_num):
         rank_file = RANK_file_list[i]
@@ -23,6 +25,17 @@ def analysis(RANK_file_list, URL_list, titles, stream_num, fname):
         outdatas.append(sline)
     dataout(fname, outdatas)
     return sorted_datas
+
+
+def make_ranking(livers: Conbined_Liver_data):
+    ranklist = analysis_RANK(livers.chat_speed_rank_files, livers.urls,
+                             livers.titles, livers.stream_num, 
+                             livers.ranking_file_name)
+    for i in range(min(len(ranklist), 10)):
+        head = os.path.join(livers.video_directory, f"{i+1}-")
+        URL = ranklist[i][0]
+        TIME = int(ranklist[i][1])
+        download(URL, head, TIME-90, TIME+90)
 
 
 def get_url_by_fname(fname):

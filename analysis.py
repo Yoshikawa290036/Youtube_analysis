@@ -3,8 +3,7 @@ from liver_data_class import Liver_data, Conbined_Liver_data
 import pickle
 import sys
 import io
-from analysis_RANK import analysis
-from download import download
+from analysis_RANK import make_ranking
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
@@ -50,16 +49,6 @@ def read_Liver_data_class(be, en, gens, c_names):
             liver = pickle.load(f)
         livers.append(liver)
     return livers
-
-
-def make_ranking(livers: Conbined_Liver_data):
-    ranklist = analysis(livers.chat_speed_rank_files, livers.urls,
-                        livers.titles, livers.stream_num, livers.ranking_file_name)
-    for i in range(min(len(ranklist), 10)):
-        head = os.path.join(livers.video_directory, f"{i+1}-")
-        URL = ranklist[i][0]
-        TIME = int(ranklist[i][1])
-        download(URL, head, TIME-90, TIME+90)
 
 
 def main():
