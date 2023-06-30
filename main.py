@@ -35,7 +35,7 @@ def main(liver: Liver_data):
         print(f'  {i+1} / {liver.stream_num}')
         print('Stream URL    : ', liver.stream_url[i])
         print('Stream Date   : ', liver.stream_date[i])
-        print('Stream Title  : ', liver.stream_title[i])
+        # print('Stream Title  : ', liver.stream_title[i])
         print('Stream ID     : ', liver.stream_id[i])
         liver.pos = i
         getdata(liver)

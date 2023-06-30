@@ -47,7 +47,9 @@ class Conbined_Liver_data(object):
         self.end_date = int(end_date)
         self.ranking_file_name = os.path.join(f"{self.start_date}-{self.end_date}", "RANKING.tsv")
         self.video_directory = os.path.join(f"{self.start_date}-{self.end_date}", "videos")
+        self.thumbnail_directory = os.path.join(f"{self.start_date}-{self.end_date}", "thumbnails")
         os.makedirs(self.video_directory, exist_ok=True)
+        os.makedirs(self.thumbnail_directory, exist_ok=True)
         self.stream_num = 0
         self.pos = 0
         self.channel_streams_urls = []

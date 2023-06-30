@@ -32,10 +32,11 @@ def make_ranking(livers: Conbined_Liver_data):
                              livers.titles, livers.stream_num, 
                              livers.ranking_file_name)
     for i in range(min(len(ranklist), 10)):
-        head = os.path.join(livers.video_directory, f"{i+1}-")
+        video_head = os.path.join(livers.video_directory, f"{i+1}-")
+        thumbnail_head = os.path.join(livers.thumbnail_directory, f"{i+1}-")
         URL = ranklist[i][0]
         TIME = int(ranklist[i][1])
-        download(URL, head, TIME-90, TIME+90)
+        download(URL, video_head, thumbnail_head, TIME-45, TIME+20)
 
 
 def get_url_by_fname(fname):
@@ -59,4 +60,4 @@ if __name__ == '__main__':
         dir = f"{dirname}{i+1}-"
         URL = ranklist[i][0]
         TIME = int(ranklist[i][1])
-        download(URL, dir, TIME-60, TIME+60)
+        download(URL, dir, TIME-40, TIME+20)
