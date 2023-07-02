@@ -60,4 +60,4 @@ if __name__ == '__main__':
         dir = f"{dirname}{i+1}-"
         URL = ranklist[i][0]
         TIME = int(ranklist[i][1])
-        download(URL, dir, TIME-40, TIME+20)
+        download(URL, dir, TIME-45, TIME+20)
