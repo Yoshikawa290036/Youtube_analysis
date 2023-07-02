@@ -27,16 +27,29 @@ def analysis_RANK(RANK_file_list, URL_list, titles, stream_num, fname):
     return sorted_datas
 
 
+def get_live_url(id, start):
+    # https://www.youtube.com/live/CiVGCuVuvH8?feature=share&t=1019
+    return f"https://www.youtube.com/watch?v={id}&t={start}s"
+
+
 def make_ranking(livers: Conbined_Liver_data):
     ranklist = analysis_RANK(livers.chat_speed_rank_files, livers.urls,
                              livers.titles, livers.stream_num, 
                              livers.ranking_file_name)
+    top10_fname = os.path.join("{livers.start_date}-{livers.end_date}","Top10_RANK.tsv")
+    print(top10_fname)
+    speed_top10 = []
     for i in range(min(len(ranklist), 10)):
         video_head = os.path.join(livers.video_directory, f"{i+1}-")
         thumbnail_head = os.path.join(livers.thumbnail_directory, f"{i+1}-")
         URL = ranklist[i][0]
         TIME = int(ranklist[i][1])
-        download(URL, video_head, thumbnail_head, TIME-45, TIME+20)
+        start = TIME-45
+        end = TIME+20
+        speed_top10.append(f"{get_live_url(URL.replace('https://www.youtube.com/watch?v=', ''), start)}\t{ranklist[i][5]}\n")
+        download(URL, video_head, thumbnail_head, start, end)
+    dataout(os.path.join(f"{livers.start_date}-{livers.end_date}","Top10_RANK.tsv"), speed_top10)
+    # dataout(top10_fname, speed_top10)
 
 
 def get_url_by_fname(fname):
