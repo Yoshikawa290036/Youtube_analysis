@@ -17,7 +17,7 @@ def get_chat_speed(liver: Liver_data):
     for line in lines[:]:
         if len(line) < 3:
             continue
-        lc = line.strip().split()
+        lc = line.strip().sprit(',')
         timekey = time2int(lc[0])
         timed[timekey] += 1
         # print(lc[0], int2time(timekey), timekey)
@@ -54,24 +54,24 @@ def int2time(timei):
 
 
 def get_min_max_time(lines):
-    lc = lines[0].strip().split()
+    lc = lines[0].strip().sprit(',')
     mintime = time2int(lc[0])
 
     for line in reversed(lines):
         if len(line) < 5:
             continue
-        lc = line.strip().split()
+        lc = line.strip().sprit(',')
         maxtime = time2int(lc[0])
         break
     return [mintime, maxtime]
 
 
 def chat_speed_ave(mintime, maxtime, timedict, width):
-    txtlist = [f"{str(mintime).zfill(5)}\t{int2time(mintime)}\t{timedict[mintime]}\t"]
+    txtlist = [f"{str(mintime).zfill(5)},{int2time(mintime)},{timedict[mintime]},"]
     cntsum = [timedict[mintime]]
     pre = cntsum[0]
     for t in range(mintime+1, maxtime+1, 1):
-        txtlist.append(f"{str(t).zfill(5)}\t{int2time(           t)}\t{timedict[t]}\t")
+        txtlist.append(f"{str(t).zfill(5)},{int2time(t)},{timedict[t]},")
         Sum = timedict[t]+pre
         cntsum.append(Sum)
         pre = Sum
@@ -89,14 +89,14 @@ def analysis_speed(outdata):
     for i in range(len(outdata)):
         if len(outdata[i]) < 4:
             continue
-        lc = outdata[i].strip().split()
+        lc = outdata[i].strip().sprit(',')
         datalist.append([lc[0], lc[1], lc[2], float(lc[3])])
 
     sored_data = sorted(datalist, key=lambda x: x[3], reverse=True)
     # for i in range(10):
     #     print(sored_data[i])
     i = 0
-    output = [f"{sored_data[i][0]}\t{sored_data[i][1]}\t{sored_data[i][2]}\t{sored_data[i][3]}"+"\n"]
+    output = [f"{sored_data[i][0]},{sored_data[i][1]},{sored_data[i][2]},{sored_data[i][3]}"+"\n"]
     visit = [int(sored_data[i][0])]
     cnt = 1
     i = 1
@@ -106,7 +106,7 @@ def analysis_speed(outdata):
                 break
         else:
             cnt += 1
-            output.append(f"{sored_data[i][0]}\t{sored_data[i][1]}\t{sored_data[i][2]}\t{sored_data[i][3]}"+"\n")
+            output.append(f"{sored_data[i][0]},{sored_data[i][1]},{sored_data[i][2]},{sored_data[i][3]}"+"\n")
             visit.append(int(sored_data[i][0]))
         i += 1
     return output
@@ -120,11 +120,11 @@ def dataout(fname, datalist):
 # def dataout(mintime, maxtime, timedict, fname):
 #     txtout = []
 #     for t in range(mintime, maxtime+1, 1):
-#         txtout.append(f"{str(t).zfill(5)}\t{int2time(t)}\t{timedict[t]}\n")
+#         txtout.append(f"{str(t).zfill(5)},{int2time(t)},{timedict[t]}\n")
 #     with open(fname, 'w', encoding='utf-16', newline='\n') as f:
 #         f.writelines(txtout)
 #     print('Create chat speed file  : ', fname)
 
 
 if __name__ == '__main__':
-    get_chat_speed_by_file('data/AGE72oBfo0k.tsv')
+    get_chat_speed_by_file('data/AGE72oBfo0k.csv')

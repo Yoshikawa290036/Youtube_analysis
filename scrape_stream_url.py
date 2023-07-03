@@ -53,9 +53,9 @@ def parse_video_title_and_url(Liver_data : Liver_data, current_html):
                 Liver_data.stream_title.append(title)
                 Liver_data.stream_date.append(date)
                 outfile = os.path.join(Liver_data.output_dir, stream_id)
-                Liver_data.chat_data_file.append(f"{outfile}.tsv")
-                Liver_data.chat_speed_file.append(f"{outfile}_speed.tsv")
-                Liver_data.chat_speed_rank_file.append(f"{outfile}_speed_RANK.tsv")
+                Liver_data.chat_data_file.append(f"{outfile}.csv")
+                Liver_data.chat_speed_file.append(f"{outfile}_speed.csv")
+                Liver_data.chat_speed_rank_file.append(f"{outfile}_speed_RANK.csv")
                 Liver_data.stream_num += 1
             print()
 

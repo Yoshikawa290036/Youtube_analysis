@@ -1,6 +1,6 @@
 @echo off
-set be=20230617
-set en=20230623
+set be=20230624
+set en=20230630
 
 timeout 15 /nobreak && mkdir %be%-%en%\0-1_@TokinoSora        &&  start /b    python   main.py     %be%      %en%     0-1     @TokinoSora            >  %be%-%en%\0-1_@TokinoSora\.log         
 timeout 15 /nobreak && mkdir %be%-%en%\0-2_@Robocosan         &&  start /b    python   main.py     %be%      %en%     0-2     @Robocosan             >  %be%-%en%\0-2_@Robocosan\.log          

@@ -19,8 +19,8 @@ def get_chat_data(liver : Liver_data):
         # print(len(chatdata.items))
         for c in chatdata.items:
             # print(f"{c.datetime} {c.elapsedTime} {c.message} {c.amountString}")
-            # txt_in.append(f'{c.elapsedTime}\t{c.type}\t{c.message}\t{c.author.name}\t{c.amountString}\t{c.currency}\t{c.amountValue}\t{c.bgColor}\n')
-            txt_in.append('{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(c.elapsedTime,
+            # txt_in.append(f'{c.elapsedTime},{c.type},{c.message},{c.author.name},{c.amountString},{c.currency},{c.amountValue},{c.bgColor}\n')
+            txt_in.append('{},{},{},{},{},{},{},{}\n'.format(c.elapsedTime,
                                                                     c.type,
                                                                     c.message,
                                                                     c.author.name,
