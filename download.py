@@ -26,8 +26,8 @@ def download(url, video_dir, thumbnal_dir, start_time, end_time):
         'writethumbnail': True
     }
 
-    with YoutubeDL(ydl_video_opts) as ydl:
-        ydl.download([url])
+    # with YoutubeDL(ydl_video_opts) as ydl:
+    #     ydl.download([url])
     with YoutubeDL(ydl_thumbnail_opts) as ydl:
         ydl.download([url])
 

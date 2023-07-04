@@ -17,7 +17,7 @@ def get_chat_speed(liver: Liver_data):
     for line in lines[:]:
         if len(line) < 3:
             continue
-        lc = line.strip().sprit(',')
+        lc = line.strip().split(',')
         timekey = time2int(lc[0])
         timed[timekey] += 1
         # print(lc[0], int2time(timekey), timekey)
@@ -54,13 +54,13 @@ def int2time(timei):
 
 
 def get_min_max_time(lines):
-    lc = lines[0].strip().sprit(',')
+    lc = lines[0].strip().split(',')
     mintime = time2int(lc[0])
 
     for line in reversed(lines):
         if len(line) < 5:
             continue
-        lc = line.strip().sprit(',')
+        lc = line.strip().split(',')
         maxtime = time2int(lc[0])
         break
     return [mintime, maxtime]
@@ -89,7 +89,7 @@ def analysis_speed(outdata):
     for i in range(len(outdata)):
         if len(outdata[i]) < 4:
             continue
-        lc = outdata[i].strip().sprit(',')
+        lc = outdata[i].strip().split(',')
         datalist.append([lc[0], lc[1], lc[2], float(lc[3])])
 
     sored_data = sorted(datalist, key=lambda x: x[3], reverse=True)
