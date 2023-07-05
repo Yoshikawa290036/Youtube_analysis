@@ -72,22 +72,22 @@ def make_transition(thumbnail_fname:str, rank_num:int, title:str, speed:float, s
         else:
             titles[len(titles)-1]+=c
     
-    BG = Image.new("RGB", (1920, 1200), (255,255,255))
+    BG = Image.new("RGB", (1920, 1080), (255,255,255))
     BG.putalpha(0)
     thumbnail_original = Image.open(thumbnail_fname).copy()
-    w = int(1280*1.2)
-    h = int(720*1.2)
+    w = int(1280*1.0)
+    h = int(720*1.0)
     left_top = int(1980/2-w/2+20)
-    thumbnail = thumbnail_original.resize(size=(w, h))
-    BG.paste(thumbnail, (left_top, 0))
-    BG.save("sample.png")
-    img = add_text_to_image(BG, rank_num2string(rank_num), "C:\WINDOWS\Fonts\HGRSGU.TTC", 100, (244, 167, 12), 20, 20, 2000)
-    height = h+20
+    # thumbnail = thumbnail_original.resize(size=(w, h))
+    BG.paste(thumbnail_original, (left_top, 0))
+    # BG.save("sample.png")
+    img = add_text_to_image(BG, rank_num2string(rank_num), "C:\WINDOWS\Fonts\HGRSGU.TTC", 150, (255, 250, 180), 20, 20, 2000)
+    height = h+25
     for title in titles:
         img = add_text_to_image(img, title, "C:\WINDOWS\Fonts\HGRPP1.TTC", 50, (255,255,255), height, 10, 2000)
-        height += 60
-    img = add_text_to_image(img, "１秒で", "C:\WINDOWS\Fonts\HGRPP1.TTC", 50, (255,255,255), 1200-90, 400, 2000)
-    img = add_text_to_image(img, f"{speed} コメント！！", "C:\WINDOWS\Fonts\HGRPP1.TTC", 100, (255,255,25), 1200-140, 630, 2000)
+        height += 65
+    img = add_text_to_image(img, "１秒で", "C:\WINDOWS\Fonts\HGRPP1.TTC", 50, (255,255,255), 1080-90, 400, 2000)
+    img = add_text_to_image(img, f"{speed} コメント！！", "C:\WINDOWS\Fonts\HGRPP1.TTC", 100, (255,255,25), 1080-140, 630, 2000)
     img.save(save_fname)
 
 
