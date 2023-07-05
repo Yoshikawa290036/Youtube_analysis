@@ -15,10 +15,10 @@ def add_text_to_image(img, text, font_path, font_size, font_color, height, width
     position = (width, height)
     font = ImageFont.truetype(font_path, font_size)
     draw = ImageDraw.Draw(img)
-    if draw.textsize(text, font=font)[0] > max_length:
-        while draw.textsize(text + '…', font=font)[0] > max_length:
-            text = text[:-1]
-        text = text + '…'
+    # if draw.textsize(text, font=font)[0] > max_length:
+    #     while draw.textsize(text + '…', font=font)[0] > max_length:
+    #         text = text[:-1]
+    #     text = text + '…'
 
     draw.text(position, text, font_color, font=font)
 
@@ -84,13 +84,13 @@ def make_transition(thumbnail_fname: str, rank_num: int, title: str, speed: floa
     thumbnail = thumbnail_original.resize(size=(w, h))
     BG.paste(thumbnail, (left_top, 0))
     # BG.save("sample.png")
-    img = add_text_to_image(BG, rank_num2string(rank_num), "C:\WINDOWS\Fonts\HGRSGU.TTC", 120, (255, 250, 200), 50, 30, 2000)
+    img = add_text_to_image(BG, rank_num2string(rank_num), "C:\WINDOWS\Fonts\HGRSGU.TTC", 120, (255, 242, 158), 50, 30, 2000)
     height = h+25
     for title in titles:
         img = add_text_to_image(img, title, "C:\WINDOWS\Fonts\HGRPP1.TTC", 40, (255, 255, 255), height, 10, 2000)
         height += 65
     img = add_text_to_image(img, "１秒で", "C:\WINDOWS\Fonts\HGRPP1.TTC", 50, (255, 255, 255), 1080-85, 350, 2000)
-    img = add_text_to_image(img, f"{speed} コメント！！", "C:\WINDOWS\Fonts\HGRPP1.TTC", 120, (255, 255, 25), 1080-130, 580, 2000)
+    img = add_text_to_image(img, f"{speed} コメント！！", "C:\WINDOWS\Fonts\HGRPP1.TTC", 120, (255, 255, 20), 1080-130, 580, 2000)
     img.save(save_fname)
 
 
