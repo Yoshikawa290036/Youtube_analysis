@@ -4,10 +4,10 @@ import pickle
 import sys
 import io
 from analysis_RANK import make_ranking
+from mkTransition import go_make_TR
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
-
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 def read_go():
     with open("go.bat", "r", encoding="utf-8") as f:
@@ -57,6 +57,7 @@ def main():
     livers = Conbined_Liver_data(be, en, livers_list)
     # livers.print_data()
     make_ranking(livers)
+    go_make_TR(livers.top10_rank_fname)
 
 
 if __name__ == '__main__':

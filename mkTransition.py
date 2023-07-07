@@ -100,7 +100,7 @@ def go_make_TR(top10_fname):
     for i in range(min(10, len(lines))):
         if len(lines[i]) < 3:
             continue
-        lc = lines[i].strip().split(',')
+        lc = lines[i].strip().split(':,:')
         make_transition(lc[2], i+1, lc[3], float(lc[1]), lc[2].replace('.webp', '.png'))
 
 

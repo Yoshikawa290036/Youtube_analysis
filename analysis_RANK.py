@@ -38,6 +38,7 @@ def make_ranking(livers: Conbined_Liver_data):
                              livers.titles, livers.stream_num, 
                              livers.ranking_file_name)
     top10_fname = os.path.join(f"{livers.start_date}-{livers.end_date}","Top10_RANK.csv")
+    livers.top10_rank_fname = top10_fname
     print(top10_fname)
     speed_top10 = []
     for i in range(min(len(ranklist), 10)):
@@ -49,7 +50,7 @@ def make_ranking(livers: Conbined_Liver_data):
         thumbnail_fname = os.path.join(f"{livers.start_date}-{livers.end_date}","thumbnails",f"{i+1}-{ID}.webp")
         start = TIME-45
         end = TIME+20
-        speed_top10.append(f"{get_live_url(ID, start)}  ,{ranklist[i][4]},{thumbnail_fname},{ranklist[i][5]}\n")
+        speed_top10.append(f"{get_live_url(ID, start)}  :,:{ranklist[i][4]}:,:{thumbnail_fname}:,:{ranklist[i][5]}\n")
         download(URL, video_head, thumbnail_head, start, end)
     dataout(os.path.join(f"{livers.start_date}-{livers.end_date}","Top10_RANK.csv"), speed_top10)
     # dataout(top10_fname, speed_top10)

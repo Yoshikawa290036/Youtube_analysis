@@ -50,6 +50,7 @@ class Conbined_Liver_data(object):
         self.thumbnail_directory = os.path.join(f"{self.start_date}-{self.end_date}", "thumbnails")
         os.makedirs(self.video_directory, exist_ok=True)
         os.makedirs(self.thumbnail_directory, exist_ok=True)
+        self.top10_rank_fname = ''
         self.stream_num = 0
         self.pos = 0
         self.channel_streams_urls = []
