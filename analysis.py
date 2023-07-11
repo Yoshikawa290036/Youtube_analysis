@@ -5,9 +5,11 @@ import sys
 import io
 from analysis_RANK import make_ranking
 from mkTransition import go_make_TR
+from mkdescription import go_Make_description
 
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 # sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 
 def read_go():
     with open("go.bat", "r", encoding="utf-8") as f:
@@ -35,6 +37,7 @@ def read_go():
 
     # print(bestr, enstr)
     # print(gens, c_names)
+    print(f"get date : {bestr} ~ {enstr}")
     return [bestr, enstr, gens, c_names]
 
 
@@ -58,6 +61,7 @@ def main():
     # livers.print_data()
     make_ranking(livers)
     go_make_TR(livers.top10_rank_fname)
+    go_Make_description(livers.top10_rank_fname, str(livers.start_date), str(livers.end_date))
 
 
 if __name__ == '__main__':

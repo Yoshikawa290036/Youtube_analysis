@@ -65,6 +65,7 @@ def rank_num2string(rank_num: int):
 
 
 def make_transition(thumbnail_fname: str, rank_num: int, title: str, speed: float, save_fname: str):
+    print(f"processing {thumbnail_fname}...")
     titles = ['']
     cnt = 0
     for c in title:
@@ -92,16 +93,19 @@ def make_transition(thumbnail_fname: str, rank_num: int, title: str, speed: floa
     img = add_text_to_image(img, "１秒で", "C:\WINDOWS\Fonts\HGRPP1.TTC", 50, (255, 255, 255), 1080-85, 350, 2000)
     img = add_text_to_image(img, f"{speed} コメント！！", "C:\WINDOWS\Fonts\HGRPP1.TTC", 120, (255, 255, 20), 1080-130, 580, 2000)
     img.save(save_fname)
+    print(f"Create {save_fname}")
+    print()
 
 
 def go_make_TR(top10_fname):
+    os.makedirs(top10_fname.replace("Top10_RANK.csv", "Transision"), exist_ok=True)
     with open(top10_fname, 'r', encoding='utf-16') as f:
         lines = f.readlines()
     for i in range(min(10, len(lines))):
         if len(lines[i]) < 3:
             continue
         lc = lines[i].strip().split(':,:')
-        make_transition(lc[2], i+1, lc[3], float(lc[1]), lc[2].replace('.webp', '.png'))
+        make_transition(lc[2], i+1, lc[3], float(lc[1]), lc[2].replace('.webp', '.png').replace("thumbnails", "Transision"))
 
 
 if __name__ == '__main__':
