@@ -6,7 +6,7 @@ Hololiveのライブ配信から，特定の期間のコメント情報を抽出
 などを参考に，正しいバージョンのChrome Driverをインストールする．
 * python3をインストールし，下記のライブラリーを導入する．cmdで以下のコマンドを実行する．
 ```
-> python -m pip install beautifulsoup4 selenium yt-dlp pytchat moviepy
+> python -m pip install -r requirement.txt
 ```
 
 ## 実行
