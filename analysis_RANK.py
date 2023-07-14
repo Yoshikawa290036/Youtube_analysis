@@ -7,6 +7,7 @@ import os
 
 def analysis_RANK(RANK_file_list, URL_list, titles, stream_num, fname):
     datas = []
+    print("Stream num : ", stream_num)
     for i in range(stream_num):
         rank_file = RANK_file_list[i]
         title = titles[i]
@@ -33,11 +34,16 @@ def get_live_url(id, start):
     return f"https://www.youtube.com/watch?v={id}&t={start}s"
 
 
+def get_Cname_from_speed_rankfname(speed_fname: str):
+    lc = speed_fname.strip().split('\\')
+    return lc[len(lc)-2][lc[len(lc)-2].find('@'):]
+
+
 def make_ranking(livers: Conbined_Liver_data):
     ranklist = analysis_RANK(livers.chat_speed_rank_files, livers.urls,
-                             livers.titles, livers.stream_num, 
+                             livers.titles, livers.stream_num,
                              livers.ranking_file_name)
-    top10_fname = os.path.join(f"{livers.start_date}-{livers.end_date}","Top10_RANK.csv")
+    top10_fname = os.path.join(f"{livers.start_date}-{livers.end_date}", "Top10_RANK.csv")
     livers.top10_rank_fname = top10_fname
     print(top10_fname)
     speed_top10 = []
@@ -47,12 +53,18 @@ def make_ranking(livers: Conbined_Liver_data):
         URL = ranklist[i][0]
         ID = URL.replace('https://www.youtube.com/watch?v=', '')
         TIME = int(ranklist[i][1])
-        thumbnail_fname = os.path.join(f"{livers.start_date}-{livers.end_date}","thumbnails",f"{i+1}-{ID}.webp")
+        thumbnail_fname = os.path.join(f"{livers.start_date}-{livers.end_date}", "thumbnails", f"{i+1}-{ID}.webp")
         start = TIME-45
         end = TIME+20
-        speed_top10.append(f"{get_live_url(ID, start)}  :,:{ranklist[i][4]}:,:{thumbnail_fname}:,:{ranklist[i][5]}\n")
+        timeURL = get_live_url(ID, start)
+        speed_top10.append(f"{timeURL}  :,:{ranklist[i][4]}:,:{thumbnail_fname}:,:{ranklist[i][5]}\n")
         download(URL, video_head, thumbnail_head, start, end)
-    dataout(os.path.join(f"{livers.start_date}-{livers.end_date}","Top10_RANK.csv"), speed_top10)
+        livers.top10_titles.append(ranklist[i][5])
+        livers.top10_VideoID.append(ID)
+        livers.top10_urls.append(timeURL)
+        livers.top10_cnames.append(get_Cname_from_speed_rankfname(ranklist[i][6]))
+
+    dataout(os.path.join(f"{livers.start_date}-{livers.end_date}", "Top10_RANK.csv"), speed_top10)
     # dataout(top10_fname, speed_top10)
 
 
@@ -63,18 +75,19 @@ def get_url_by_fname(fname):
 
 
 if __name__ == '__main__':
-    listfname = sys.argv[1]
-    ofname = listfname.replace('_list', '')
-    with open(listfname, 'r') as f:
-        fnames = f.readlines()
-    # print(fnames)
-    ranklist = analysis(fnames, ofname)
+    # listfname = sys.argv[1]
+    # ofname = listfname.replace('_list', '')
+    # with open(listfname, 'r') as f:
+    #     fnames = f.readlines()
+    # # print(fnames)
+    # ranklist = analysis(fnames, ofname)
 
-    dirname = listfname.replace('/RANK_list.csv', '/videos/')
-    for i in range(min(len(ranklist), 10)):
-        if len(ranklist[i]) < 3:
-            continue
-        dir = f"{dirname}{i+1}-"
-        URL = ranklist[i][0]
-        TIME = int(ranklist[i][1])
-        download(URL, dir, TIME-45, TIME+20)
+    # dirname = listfname.replace('/RANK_list.csv', '/videos/')
+    # for i in range(min(len(ranklist), 10)):
+    #     if len(ranklist[i]) < 3:
+    #         continue
+    #     dir = f"{dirname}{i+1}-"
+    #     URL = ranklist[i][0]
+    #     TIME = int(ranklist[i][1])
+    #     download(URL, dir, TIME-45, TIME+20)
+    print(get_Cname_from_speed_rankfname("20230701-20230707\2-15_@OozoraSubaru\HfzH5gC7gic_speed_RANK.csv"))

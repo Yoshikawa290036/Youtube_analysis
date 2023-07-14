@@ -1,6 +1,6 @@
 import os
 import pprint
-
+from Hush_Tag import mk_hushtag
 
 def ymd(date: str):
     yea = int(date[:4])
@@ -24,7 +24,7 @@ def Make_title(start_date: str, end_date: str):
     print("Create ", os.path.join(f"{start_date}-{end_date}", "Video_title.txt"))
 
 
-def Make_description(urls, titles, start_date, end_date):
+def Make_description(urls, titles, start_date, end_date, top10_cnames):
     sdate_jp = ymd(start_date)
     edate_jp = ymd(end_date)
     with open(os.path.join("format", "Video_description.txt"),
@@ -34,7 +34,11 @@ def Make_description(urls, titles, start_date, end_date):
         if "{{{{日付}}}}" in des_form[i]:
             des_form[i] = des_form[i].replace("{{{{日付}}}}", f"{sdate_jp}～{edate_jp}")
             break
-
+    for i in range(len(des_form)):
+        if "{{{{Hush_Tag}}}}" in des_form[i]:
+            des_form[i] = des_form[i].replace(
+                "{{{{Hush_Tag}}}}",mk_hushtag(top10_cnames, os.path.join(f"{start_date}-{end_date}", "Top10_JPname.txt")))
+            break
     for i in range(10):
         key_url = "{{{{" + str(i+1) + "th_URL}}}}"
         key_title = "{{{{" + str(i+1) + "th_TITLE}}}}"
@@ -54,7 +58,7 @@ def Make_description(urls, titles, start_date, end_date):
         f.writelines(des_form)
     print("Create ", os.path.join(f"{start_date}-{end_date}", "Video_description.txt"))
 
-def go_Make_description(top10_rank_fname: str, sdate: str, edate: str):
+def go_Make_description(top10_rank_fname: str, sdate: str, edate: str, top10_cnames:list):
     with open(top10_rank_fname, "r", encoding="utf-16") as f:
         lines = f.readlines()
     urls = []
@@ -63,7 +67,7 @@ def go_Make_description(top10_rank_fname: str, sdate: str, edate: str):
         lc = lines[i].strip().split(':,:')
         urls.append(lc[0])
         titles.append(lc[3])
-    Make_description(urls, titles, sdate, edate)
+    Make_description(urls, titles, sdate, edate, top10_cnames)
     Make_title(sdate, edate)
 
 

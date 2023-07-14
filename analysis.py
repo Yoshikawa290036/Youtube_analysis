@@ -61,7 +61,7 @@ def main():
     # livers.print_data()
     make_ranking(livers)
     go_make_TR(livers.top10_rank_fname)
-    go_Make_description(livers.top10_rank_fname, str(livers.start_date), str(livers.end_date))
+    go_Make_description(livers.top10_rank_fname, str(livers.start_date), str(livers.end_date), livers.top10_cnames)
 
 
 if __name__ == '__main__':

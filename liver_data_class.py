@@ -51,6 +51,10 @@ class Conbined_Liver_data(object):
         os.makedirs(self.video_directory, exist_ok=True)
         os.makedirs(self.thumbnail_directory, exist_ok=True)
         self.top10_rank_fname = ''
+        self.top10_cnames = []
+        self.top10_urls = []
+        self.top10_titles = []
+        self.top10_VideoID = []
         self.stream_num = 0
         self.pos = 0
         self.channel_streams_urls = []
