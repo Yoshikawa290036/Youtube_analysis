@@ -22,7 +22,7 @@ def get_page_source(Liver_data):
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     driver = webdriver.Chrome(options=options)
     driver.get(Liver_data.channel_streams_url)
-    time.sleep(3)
+    time.sleep(20)
     return driver.page_source
 
 
